@@ -16,7 +16,7 @@ button {
     border-radius: 10px;
     z-index: 20;
     background-color: white;
-    width: 500px;
+    width: auto;
     max-width: 80%;
 }
 
