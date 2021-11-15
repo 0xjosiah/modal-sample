@@ -1,18 +1,12 @@
 const openModalButtons = document.querySelectorAll('[data-modal-target]')
 const closeModalButtons = document.querySelectorAll('[data-close-button]')
 const overlay = document.getElementById('overlay')
-
-const ctaVideo = 'https://www.youtube.com/embed/lSkiUA6WCAE'
-const ctaVideo2 = 'https://www.youtube.com/embed/71FDrI4DJfM'
-
-const videoPlayer = document.getElementById('video-player')
-
+const videoPlayers = document.querySelectorAll('.video-player')
 
 openModalButtons.forEach(button => {
     button.addEventListener('click', () => {
         const modal = document.querySelector(button.dataset.modalTarget)
         openModal(modal)
-        videoPlayer.getAttribute('src', 'https://www.youtube.com/embed/lSkiUA6WCAE')
     })
 })
 
@@ -20,6 +14,9 @@ overlay.addEventListener('click', () => {
     const modals = document.querySelectorAll('.modal.active')
     modals.forEach(modal => {
         closeModal(modal)
+    })
+    videoPlayers.forEach(videoPlayer => {
+        videoPlayer.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*')
     })
 })
 
@@ -29,6 +26,9 @@ window.addEventListener('keydown', (event) => {
         modals.forEach(modal => {
             closeModal(modal)
         })
+        videoPlayers.forEach(videoPlayer => {
+            videoPlayer.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*')
+        })
     }
 })
 
@@ -36,6 +36,9 @@ closeModalButtons.forEach(button => {
     button.addEventListener('click', () => {
         const modal = button.closest('.modal')
         closeModal(modal)
+        videoPlayers.forEach(videoPlayer => {
+            videoPlayer.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*')
+        })
     })
 })
 
@@ -51,8 +54,9 @@ function closeModal(modal) {
     overlay.classList.remove('active')
 }
 
-function addVidSrc () {
 
+
+const videos = {
+    ctaVideo: 'https://www.youtube.com/embed/lSkiUA6WCAE',
+    ctaVideo2: 'https://www.youtube.com/embed/71FDrI4DJfM',
 }
-
-// ENDED AT 14:13
